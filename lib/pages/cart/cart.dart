@@ -1,3 +1,4 @@
+import 'package:demo_state/components/count_button.dart';
 import 'package:flutter/material.dart';
 import '../../utils/global.dart';
 
@@ -17,7 +18,6 @@ class _CartState extends State<Cart> {
         title: const Text('Your Cart'),
         centerTitle: true,
       ),
-      backgroundColor: Colors.amberAccent,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -41,20 +41,10 @@ class _CartState extends State<Cart> {
                       ],
                     ),
                     const Spacer(),
-                    MaterialButton(
-                        color: Colors.red,
-                        onPressed: () {
-                          Global.cart[index].count++;
-                          setState(() {});
-                        },
-                        child: const Icon(Icons.add)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text('${Global.cart[index].count}'),
-                    ),
-                    MaterialButton(
-                        color: Colors.red,
-                        onPressed: () {
+
+                    ///decrease count
+                    CountButton(
+                        onTap: () {
                           if (Global.cart[index].count == 1) {
                             Global.cart.remove(Global.cart[index]);
                             setState(() {});
@@ -63,7 +53,22 @@ class _CartState extends State<Cart> {
                           Global.cart[index].count--;
                           setState(() {});
                         },
-                        child: const Icon(Icons.remove)),
+                        icon: Icons.remove),
+
+                    ///count text
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text('${Global.cart[index].count}'),
+                    ),
+
+                    ///increase count
+                    CountButton(
+                      onTap: () {
+                        Global.cart[index].count++;
+                        setState(() {});
+                      },
+                      icon: Icons.add,
+                    ),
                   ],
                 ),
               ),

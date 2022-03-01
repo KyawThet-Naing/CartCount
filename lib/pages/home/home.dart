@@ -1,3 +1,4 @@
+import 'package:demo_state/components/count_button.dart';
 import 'package:demo_state/models/cart_model.dart';
 import 'package:demo_state/models/products.dart';
 import 'package:demo_state/pages/cart/cart.dart';
@@ -28,6 +29,10 @@ class _HomeState extends State<Home> {
               setState(() {});
             },
             icon: const Icon(Icons.shopping_cart),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, right: 10),
+            child: Text('${Global.cart.length}'),
           )
         ],
       ),
@@ -60,31 +65,22 @@ class _HomeState extends State<Home> {
                     ),
                     const Spacer(),
 
-                    ///
-                    indexOf(Global.prducts[index].name) == -1
+                    ///product not found in cart
+                    cartIndex == -1
                         ?
 
                         ///add to cart button
                         MaterialButton(
+                            height: 40,
+                            minWidth: 80,
                             color: Colors.red,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             onPressed: () {
-                              if (cartIndex == -1) {
-                                Global.cart.add(
-                                  CartModel(count: 1, product: product),
-                                );
-                                setState(() {});
-                              } else {
-                                int pCount = Global.cart[cartIndex].count + 1;
-
-                                ///remove first before insert
-                                Global.cart.removeAt(cartIndex);
-
-                                ///insert
-                                Global.cart.insert(
-                                  cartIndex,
-                                  CartModel(count: pCount, product: product),
-                                );
-                              }
+                              Global.cart.add(
+                                CartModel(count: 1, product: product),
+                              );
+                              setState(() {});
                             },
                             child: const Text(
                               'Add to cart',
@@ -98,31 +94,38 @@ class _HomeState extends State<Home> {
                         ///product count button row
                         Row(
                             children: [
-                              MaterialButton(
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    Global.cart[cartIndex].count++;
+                              ///decrease count
+                              CountButton(
+                                onTap: () {
+                                  if (Global.cart[cartIndex].count <= 1) {
+                                    Global.cart.removeAt(cartIndex);
                                     setState(() {});
-                                  },
-                                  child: const Icon(Icons.add)),
+                                    return;
+                                  }
+
+                                  ///else
+                                  Global.cart[cartIndex].count--;
+                                  setState(() {});
+                                },
+                                icon: Icons.remove,
+                              ),
+
+                              ///count text
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 10,
                                 ),
                                 child: Text('${Global.cart[cartIndex].count}'),
                               ),
-                              MaterialButton(
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    if (Global.cart[cartIndex].count == 1) {
-                                      Global.cart.removeAt(cartIndex);
-                                      setState(() {});
-                                      return;
-                                    }
-                                    Global.cart[cartIndex].count--;
-                                    setState(() {});
-                                  },
-                                  child: const Icon(Icons.remove)),
+
+                              ///increase count
+                              CountButton(
+                                onTap: () {
+                                  Global.cart[cartIndex].count++;
+                                  setState(() {});
+                                },
+                                icon: Icons.add,
+                              ),
                             ],
                           )
                   ],
