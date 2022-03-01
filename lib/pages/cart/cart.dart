@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/global.dart';
+import '../../utils/global.dart';
 
 class Cart extends StatefulWidget {
   static const String route = "/cart";
@@ -33,11 +33,11 @@ class _CartState extends State<Cart> {
                 child: Row(
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(Global.cart[index].product.name),
-                        Text(
-                          Global.cart[index].product.price.toString(),
-                        ),
+                        const SizedBox(height: 10),
+                        Text('${Global.cart[index].product.price} /Ks'),
                       ],
                     ),
                     const Spacer(),

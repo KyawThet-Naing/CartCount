@@ -9,6 +9,6 @@ class Global {
     Product(name: "Product D", price: 1500),
     Product(name: "Product E", price: 1600),
   ];
-
+  
   static List<CartModel> cart = [];
 }

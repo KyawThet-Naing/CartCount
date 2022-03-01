@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../pages/cart.dart';
-import '/pages/home.dart';
+import '../pages/cart/cart.dart';
+import '../pages/home/home.dart';
 
 class Routes {
   static Route? onGenerateRoute(RouteSettings settings) {
